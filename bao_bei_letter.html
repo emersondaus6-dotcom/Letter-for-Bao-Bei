@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Letter For You 💌</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;overflow:hidden;
+  font-family:Georgia,"Times New Roman",serif;color:#4a1930;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.18) 0 2px,transparent 3px),
+    radial-gradient(circle at 80% 35%,rgba(255,255,255,.15) 0 1.5px,transparent 2.5px),
+    linear-gradient(145deg,#4b102b,#8f2455 45%,#3d0b27);
+}
+.stars{position:fixed;inset:0;pointer-events:none}
+.star{position:absolute;color:rgba(255,255,255,.8);animation:twinkle 2.5s infinite ease-in-out}
+@keyframes twinkle{50%{opacity:.25;transform:scale(.65)}}
+.screen{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;z-index:2}
+.intro{text-align:center;color:white}
+.intro h1{font-size:clamp(2rem,8vw,3.8rem);margin:0 0 8px}
+.intro p{opacity:.88;margin:0 0 28px;font-family:system-ui,sans-serif}
+.envelope-wrap{cursor:pointer;width:min(88vw,380px)}
+.envelope{position:relative;width:100%;aspect-ratio:1.55;margin:auto;background:#f8c4d8;border-radius:8px;box-shadow:0 20px 55px rgba(0,0,0,.35);transition:transform .25s}
+.envelope-wrap:hover .envelope{transform:translateY(-7px) rotate(-1deg)}
+.envelope:before{content:"";position:absolute;inset:0;background:#e99bb9;clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);border-radius:8px}
+.flap{position:absolute;inset:0 0 auto;height:58%;background:#f7b5ce;clip-path:polygon(0 0,50% 100%,100% 0);transform-origin:top;transition:transform .7s cubic-bezier(.2,.8,.2,1);z-index:4;border-radius:8px 8px 0 0}
+.seal{position:absolute;z-index:5;left:50%;top:52%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:#a51f50;color:white;font-size:28px;box-shadow:0 5px 15px rgba(0,0,0,.2)}
+.letter-screen{display:none}.letter-screen.show{display:grid;animation:fade .7s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.letter{width:min(92vw,720px);max-height:90vh;overflow:auto;background:#fff9f4;border-radius:18px;padding:clamp(24px,6vw,52px);box-shadow:0 25px 80px rgba(0,0,0,.35);position:relative}
+.letter:before{content:"♥";position:absolute;right:18px;top:5px;font-size:100px;color:rgba(205,72,117,.08);transform:rotate(15deg)}
+.to{color:#a51f50;font-family:system-ui,sans-serif;font-weight:700}
+h2{font-size:clamp(2rem,7vw,3.2rem);margin:8px 0 20px}
+.body-text{font-size:clamp(1.05rem,3.5vw,1.25rem);line-height:1.8;white-space:pre-line}
+.signature{margin-top:28px;font-size:1.25rem;color:#a51f50}
+.small{font:.9rem system-ui,sans-serif;color:#81556a;margin-top:22px}
+button{border:0;border-radius:999px;padding:12px 20px;background:#a51f50;color:white;cursor:pointer;font-weight:700;margin-top:18px}
+.heart{position:fixed;bottom:-30px;font-size:20px;animation:floatUp 5s linear forwards;pointer-events:none;z-index:10}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<section class="screen intro" id="intro">
+  <div>
+    <h1>A little something for you 💌</h1>
+    <p>Tap the envelope when you're ready.</p>
+    <div class="envelope-wrap" onclick="openLetter()">
+      <div class="envelope">
+        <div class="flap" id="flap"></div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen letter-screen" id="letterScreen">
+  <article class="letter">
+    <div class="to">To: Bao Bei ❤️</div>
+    <h2>My love,</h2>
+    <div class="body-text">Please don’t be too hard on yourself.
+
+You are more than enough and going more than enough. You are the most beautiful, the strongest, the sweetest, the hottest, the smartest and the funniest woman in the world.
+
+I love how you’re always waiting for me, make time for me even though you’re busy, understand me, teach me, and care for me.
+
+You will always be loved by me and I LOVE YOU SO SO MUCH.
+
+When you’re tired, you can always rest on me.
+
+MWAH MWAH MWAH ❤️</div>
+    <div class="signature">— With all my love 💕</div>
+    <div class="small">Whenever you need a reminder, come back here. ♡</div>
+    <button onclick="makeHearts()">One more MWAH 💕</button>
+  </article>
+</section>
+
+<script>
+const stars=document.getElementById("stars");
+for(let i=0;i<45;i++){
+ const s=document.createElement("span");s.className="star";
+ s.textContent=Math.random()>.7?"✦":"·";
+ s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";
+ s.style.fontSize=8+Math.random()*12+"px";s.style.animationDelay=Math.random()*3+"s";
+ stars.appendChild(s);
+}
+function openLetter(){
+ document.getElementById("flap").style.transform="rotateX(180deg)";
+ setTimeout(()=>{
+   document.getElementById("intro").style.display="none";
+   document.getElementById("letterScreen").classList.add("show");
+   makeHearts();
+ },650);
+}
+function makeHearts(){
+ for(let i=0;i<18;i++){
+  const h=document.createElement("div");h.className="heart";
+  h.textContent=Math.random()>.25?"♥":"♡";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=14+Math.random()*22+"px";
+  h.style.animationDuration=3.5+Math.random()*3+"s";
+  document.body.appendChild(h);setTimeout(()=>h.remove(),7000);
+ }
+}
+</script>
+</body>
+</html>
